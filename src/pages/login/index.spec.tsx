@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Login } from "./login";
+import { Login } from ".";
 
 describe("Login Page", () => {
   beforeEach(() => {

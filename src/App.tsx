@@ -1,12 +1,11 @@
 import './App.css'
-import { Login } from './layouts/login'
+
+import { RouterProvider } from 'react-router-dom'
+
+import { router } from './router'
 
 function App() {
-  return (
-    <main>
-      <Login />
-    </main>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App
