@@ -11,7 +11,8 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: [
       "./src/setup.tests.ts"
-    ]
+    ],
+    include: ["./src/**/*.spec.{ts,tsx}"],
   },
   resolve: {
     alias: [
