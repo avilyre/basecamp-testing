@@ -1,9 +1,10 @@
 import './App.css'
+import { Header } from './components/header'
 
 function App() {
   return (
     <main>
-      <h1>Basecamp Testing</h1>
+      <Header />
 
       <button type="button">That is it!</button>
     </main>
