@@ -1,4 +1,6 @@
 import { FormEvent } from "react";
+import { Link } from "react-router-dom";
+
 import "./index.styles.scss";
 
 import { useNavigate } from "react-router-dom";
@@ -19,6 +21,7 @@ export const Login = () => {
         <input type="text" placeholder="Email"/>
         <input type="text" placeholder="Password"/>
         <button type="submit" onClick={handleSubmit}>Sign In</button>
+        <Link to="/sign-up">Sign Up</Link>
       </form>
     </div>
   );

@@ -1,7 +1,7 @@
 import "./index.styles.scss";
 
 import { FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ export const SignUp = () => {
         <input type="text" placeholder="Email"/>
         <input type="text" placeholder="Password"/>
         <button type="submit" onClick={handleSubmit}>Sign Up</button>
+        <Link to="/">Back to login</Link>
     </form>
     </div>
   );

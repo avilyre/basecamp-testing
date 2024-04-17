@@ -1,11 +1,21 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Login } from ".";
+import React from "react";
+
+type LinkType = {
+  children: JSX.Element;
+  to: string;
+}
 
 const navigateMock = vi.fn();
 
 describe("Login Page", () => {
   vi.mock("react-router-dom", () => ({
-    useNavigate: () => navigateMock
+    useNavigate: () => navigateMock,
+    Link: (props: LinkType) => {
+      const { children, to } = props;
+      return React.createElement("a", { href: to }, children);
+    }
   }));
 
   beforeEach(() => {
@@ -43,9 +53,28 @@ describe("Login Page", () => {
     expect(button).toBeInTheDocument();
   });
 
-  it("Shouble be able to click the submit button", async () => {
-    const button = await screen.findByRole("button");
+  it("Should be able to click the submit button", async () => {
+    const button = await screen.findByRole("button", {
+      name: "Sign In"
+    });
     fireEvent.click(button);
     expect(navigateMock).toHaveBeenCalledTimes(1);
+  });
+
+  describe("Sign Up button", () => {
+    it("Should be able to render the Sign Up link", async () => {
+      const link = await screen.findByRole("link", {
+        name: "Sign Up",
+      });
+      expect(link).toHaveAttribute("href", "/sign-up");
+    })
+
+    it("Should be able to click the Sign Up link", async () => {
+      const link = await screen.findByRole("link", {
+        name: "Sign Up",
+      });
+      fireEvent.click(link);
+      expect(navigateMock).toHaveBeenCalledOnce();
+    });
   });
 });
