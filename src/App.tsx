@@ -1,12 +1,10 @@
 import './App.css'
-import { Header } from './components/header'
+import { Login } from './layouts/login'
 
 function App() {
   return (
     <main>
-      <Header />
-
-      <button type="button">That is it!</button>
+      <Login />
     </main>
   )
 }
