@@ -17,6 +17,7 @@ describe("SignUp Page", () => {
       const { children, to } = props;
       return React.createElement("a", { href: to }, children);
     }
+    // or Link: vi.fn().mockImplementation(props => props.children)
   }));
 
   beforeEach(() => {
