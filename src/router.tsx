@@ -4,6 +4,7 @@ import { Login } from "./pages/login";
 import { Dashboard } from "./pages/dashboard";
 import { SignUp } from "./pages/sign-up";
 import { NotFound } from "./pages/not-found";
+import { fetchPokemonList } from "./services/pokemon-service";
 
 export const routesConfig: RouteObject[] = [
   {
@@ -20,7 +21,7 @@ export const routesConfig: RouteObject[] = [
       },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: <Dashboard fetchPokemonList={fetchPokemonList} />,
       }
     ]
   }

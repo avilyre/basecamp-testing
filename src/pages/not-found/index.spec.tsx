@@ -43,8 +43,6 @@ describe("Not Found Page", () => {
       name: "Go to home page"
     });
 
-    console.log(link);
-
     expect(link).toHaveAttribute("href", "/");
   });
 })

@@ -11,6 +11,7 @@ const createRouter = (initialEntries: string[]) => {
 }
 
 describe("Router", () => {
+  
   it("Should be able to render the Login page", async () => {
     const router = createRouter(["/"]);
 
