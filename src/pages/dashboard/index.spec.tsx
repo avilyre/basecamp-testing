@@ -3,6 +3,7 @@ import { faker } from "@faker-js/faker";
 
 import { Dashboard } from ".";
 import { fetchPokemonList } from "../../services/pokemon-service";
+import { act } from "react-dom/test-utils";
 
 const mockFetchPokemonListFn = vi.fn(fetchPokemonList).mockImplementation(async () => {
   return [
@@ -34,8 +35,10 @@ const mockFetchPokemonListFn = vi.fn(fetchPokemonList).mockImplementation(async 
 });
 
 describe("Dashboard Page", () => {
-  beforeEach(() => {
-    render(<Dashboard fetchPokemonList={mockFetchPokemonListFn} />);
+  beforeEach(async () => {
+    await act(async () => { // act is used when we have an update from react in the component Dashboard
+      render(<Dashboard fetchPokemonList={mockFetchPokemonListFn} />);
+    });
   });
 
   it("Should be able to render the title", async () => {
