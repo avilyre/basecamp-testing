@@ -46,4 +46,16 @@ describe("Router", () => {
     });
     expect(title).toBeInTheDocument();
   });
+
+  it("Should be able to render the Not Found page", async () => {
+    const router = createRouter(["/some-path"]);
+
+    render(<RouterProvider router={router} />);
+
+    const title = await screen.findByRole("heading", {
+      name: "404 Not Found",
+      level: 1
+    });
+    expect(title).toBeInTheDocument();
+  });
 });
