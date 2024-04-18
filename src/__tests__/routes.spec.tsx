@@ -1,15 +1,20 @@
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { RouterProvider, createMemoryRouter } from "react-router-dom";
 
-import { Router } from "../router";
+import { routesConfig } from "../router";
+
+const createRouter = (initialEntries: string[]) => {
+  const routerConfig = createMemoryRouter(routesConfig, {
+    initialEntries
+  });
+  return routerConfig;
+}
 
 describe("Router", () => {
   it("Should be able to render the Login page", async () => {
-    render(
-      <MemoryRouter initialEntries={["/"]}>
-        <Router />
-      </MemoryRouter>
-    );
+    const router = createRouter(["/"]);
+
+    render(<RouterProvider router={router} />);
 
     const title = await screen.findByRole("heading", {
       name: "Basecamp",
@@ -19,11 +24,9 @@ describe("Router", () => {
   });
 
   it("Should be able to render the Sign Up page", async () => {
-    render(
-      <MemoryRouter initialEntries={["/sign-up"]}>
-        <Router />
-      </MemoryRouter>
-    );
+    const router = createRouter(["/sign-up"]);
+
+    render(<RouterProvider router={router} />);
 
     const title = await screen.findByRole("heading", {
       name: "Sign Up",
@@ -32,12 +35,10 @@ describe("Router", () => {
     expect(title).toBeInTheDocument();
   });
 
-  it("Should be able to render the Dashboard Up page", async () => {
-    render(
-      <MemoryRouter initialEntries={["/dashboard"]}>
-        <Router />
-      </MemoryRouter>
-    );
+  it("Should be able to render the Dashboard page", async () => {
+    const router = createRouter(["/dashboard"]);
+
+    render(<RouterProvider router={router} />);
 
     const title = await screen.findByRole("heading", {
       name: "Dashboard",
