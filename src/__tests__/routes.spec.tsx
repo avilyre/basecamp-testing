@@ -1,19 +1,49 @@
 import { render, screen } from "@testing-library/react";
-import { RouterProvider, createMemoryRouter } from "react-router-dom";
+import { RouteObject, RouterProvider, createMemoryRouter } from "react-router-dom";
 
 import { routesConfig } from "../router";
+import { fetchPokemonList } from "../services/pokemon-service";
+import { faker } from "@faker-js/faker";
 
-const createRouter = (initialEntries: string[]) => {
+const createRouter = (routesConfig: RouteObject[], initialEntries: string[]) => {
   const routerConfig = createMemoryRouter(routesConfig, {
     initialEntries
   });
   return routerConfig;
 }
 
+const mockFetchPokemonListFn = vi.fn(fetchPokemonList).mockImplementation(async () => {
+  return [
+    {
+      id: "1",
+      name: "bulbasaur",
+      image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+      type: "grass",
+    },
+    {
+      id: "2",
+      name: "ivysaur",
+      image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
+      type: "grass"
+    },
+    {
+      id: "3",
+      name: "venusaur",
+      image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png",
+      type: "grass"
+    },
+    {
+      id: "4",
+      name: "random",
+      image: faker.image.urlPlaceholder(),
+      type: "grass"
+    }
+  ]
+});
+
 describe("Router", () => {
-  
   it("Should be able to render the Login page", async () => {
-    const router = createRouter(["/"]);
+    const router = createRouter(routesConfig(), ["/"]);
 
     render(<RouterProvider router={router} />);
 
@@ -25,7 +55,7 @@ describe("Router", () => {
   });
 
   it("Should be able to render the Sign Up page", async () => {
-    const router = createRouter(["/sign-up"]);
+    const router = createRouter(routesConfig(), ["/sign-up"]);
 
     render(<RouterProvider router={router} />);
 
@@ -37,7 +67,13 @@ describe("Router", () => {
   });
 
   it("Should be able to render the Dashboard page", async () => {
-    const router = createRouter(["/dashboard"]);
+    const router = createRouter(routesConfig({
+      dependenciesInjection: {
+        dashboard: {
+          fetchPokemonList: mockFetchPokemonListFn
+        }
+      }
+    }), ["/dashboard"]);
 
     render(<RouterProvider router={router} />);
 
@@ -49,7 +85,7 @@ describe("Router", () => {
   });
 
   it("Should be able to render the Not Found page", async () => {
-    const router = createRouter(["/some-path"]);
+    const router = createRouter(routesConfig(), ["/some-path"]);
 
     render(<RouterProvider router={router} />);
 

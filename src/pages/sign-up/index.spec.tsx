@@ -80,7 +80,6 @@ describe("SignUp Page", () => {
     const link = await screen.findByRole("link", {
       name: "Back to login",
     });
-    fireEvent.click(link);
-    expect(navigateMock).toHaveBeenCalledOnce();
+    expect(link).toHaveAttribute("href", "/");
   });
 });

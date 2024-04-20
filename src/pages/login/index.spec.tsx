@@ -74,8 +74,7 @@ describe("Login Page", () => {
       const link = await screen.findByRole("link", {
         name: "Sign Up",
       });
-      fireEvent.click(link);
-      expect(navigateMock).toHaveBeenCalledOnce();
+      expect(link).toHaveAttribute("href", "/sign-up");
     });
   });
 });
