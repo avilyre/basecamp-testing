@@ -4,21 +4,28 @@ import { Login } from "./pages/login";
 import { Dashboard } from "./pages/dashboard";
 import { SignUp } from "./pages/sign-up";
 import { NotFound } from "./pages/not-found";
-import { fetchPokemonList } from "./services/pokemon-service";
+import { fetchPokemonDetails, fetchPokemonList } from "./services/pokemon-service";
 import { PokemonType } from "./@types/pokemon";
+import { Details } from "./pages/details";
 
 type RoutesConfig = {
   dependenciesInjection: {
-    dashboard: {
+    dashboard?: {
       fetchPokemonList: () => Promise<PokemonType[]>
-    }
+    },
+    details?: {
+      fetchPokemonDetails: (id: string) => Promise<PokemonType>}
   };
 }
 
 export const routesConfig = (props?: RoutesConfig) => {
-  const dashboardFetchPokemonList = props?.dependenciesInjection.dashboard.fetchPokemonList
+  const dashboardFetchPokemonList = props?.dependenciesInjection.dashboard?.fetchPokemonList
   ? props.dependenciesInjection.dashboard.fetchPokemonList
   : () => ({} as Promise<PokemonType[]>);
+
+  const fetchPokemonDetails = props?.dependenciesInjection.details?.fetchPokemonDetails
+  ? props.dependenciesInjection.details.fetchPokemonDetails
+  : () => ({} as Promise<PokemonType>);
 
   const routes: RouteObject[] = [
     {
@@ -36,6 +43,10 @@ export const routesConfig = (props?: RoutesConfig) => {
           path: "/dashboard",
           element: <Dashboard fetchPokemonList={dashboardFetchPokemonList} />,
         },
+        {
+          path: "/details/:id",
+          element: <Details fetchPokemonDetails={fetchPokemonDetails} />
+        }
       ]
     },
     {
@@ -51,6 +62,9 @@ export const router = createBrowserRouter(routesConfig({
   dependenciesInjection: {
     dashboard: {
       fetchPokemonList
+    },
+    details: {
+      fetchPokemonDetails
     }
   }
 }));

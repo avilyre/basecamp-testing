@@ -17,12 +17,15 @@
   gap: 1rem;
 
   & li {
-    display: inline-block;
+    display: flex;
     text-align: left;
-    padding: 1rem;
-
+    
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 1rem;
+    
+    & a {
+      padding: 1rem;
+    }
 
     &:hover {
       border-color: rgba(255, 255, 255, 0.5);

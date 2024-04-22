@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { RouteObject, RouterProvider, createMemoryRouter } from "react-router-dom";
 
 import { routesConfig } from "../router";
-import { fetchPokemonList } from "../services/pokemon-service";
+import { fetchPokemonDetails, fetchPokemonList } from "../services/pokemon-service";
 import { faker } from "@faker-js/faker";
 
 const createRouter = (routesConfig: RouteObject[], initialEntries: string[]) => {
@@ -39,6 +39,15 @@ const mockFetchPokemonListFn = vi.fn(fetchPokemonList).mockImplementation(async 
       type: "grass"
     }
   ]
+});
+
+const mockFetchPokemonDetailsFn = vi.fn(fetchPokemonDetails).mockImplementation(async () => {
+  return {
+    id: "1",
+    name: "bulbasaur",
+    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+    type: "grass"
+  }
 });
 
 describe("Router", () => {
@@ -92,6 +101,23 @@ describe("Router", () => {
     const title = await screen.findByRole("heading", {
       name: "404 Not Found",
       level: 1
+    });
+    expect(title).toBeInTheDocument();
+  });
+
+  it("Should be able to render the Pokemon details page", async () => {
+    const router = createRouter(routesConfig({
+      dependenciesInjection: {
+        details: {
+          fetchPokemonDetails: mockFetchPokemonDetailsFn
+        }
+      }
+    }), ["/details/1"]);
+
+    render(<RouterProvider router={router} />);
+
+    const title = await screen.findByRole("heading", {
+      name: "bulbasaur",
     });
     expect(title).toBeInTheDocument();
   });

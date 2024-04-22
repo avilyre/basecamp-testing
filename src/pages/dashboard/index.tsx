@@ -3,6 +3,7 @@ import "./index.styles.scss";
 import { useCallback, useEffect, useState } from "react";
 
 import { PokemonType } from "../../@types/pokemon";
+import { Link } from "react-router-dom";
 
 interface IProps {
   fetchPokemonList: () => Promise<PokemonType[]>;
@@ -31,9 +32,11 @@ export const Dashboard = (props: IProps) => {
       <ul data-testid="pokemons-list" className="pokemons-list">
         {pokemons.map(pokemon => (
           <li key={pokemon.id}>
-            <img src={pokemon.image} alt={pokemon.name} />
-            <strong>{pokemon.type}</strong>
-            <h3>{pokemon.name}</h3>
+            <Link to={`/details/${pokemon.id}`}>
+              <img src={pokemon.image} alt={pokemon.name} />
+              <strong>{pokemon.type}</strong>
+              <h3>{pokemon.name}</h3>
+            </Link>
           </li>))}
       </ul>
     </div>

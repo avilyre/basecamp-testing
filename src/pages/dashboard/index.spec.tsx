@@ -4,6 +4,7 @@ import { faker } from "@faker-js/faker";
 import { Dashboard } from ".";
 import { fetchPokemonList } from "../../services/pokemon-service";
 import { act } from "react-dom/test-utils";
+import React from "react";
 
 const mockFetchPokemonListFn = vi.fn(fetchPokemonList).mockImplementation(async () => {
   return [
@@ -34,7 +35,20 @@ const mockFetchPokemonListFn = vi.fn(fetchPokemonList).mockImplementation(async 
   ]
 });
 
+type LinkType = {
+  to: string;
+  children: JSX.Element;
+}
+
 describe("Dashboard Page", () => {
+  vi.mock("react-router-dom", () => ({
+    Link: (props: LinkType) => {
+      const { to, children } = props;
+      const linkComponent = React.createElement("a", { href: to }, children);
+      return linkComponent;
+    }
+  }));
+
   beforeEach(async () => {
     await act(async () => { // act is used when we have an update from react in the component Dashboard
       render(<Dashboard fetchPokemonList={mockFetchPokemonListFn} />);
