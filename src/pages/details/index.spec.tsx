@@ -2,6 +2,8 @@ import { act, render, screen, within } from "@testing-library/react";
 import { Details } from ".";
 import { fetchPokemonDetails } from "../../services/pokemon-service";
 import React from "react";
+import { RouteObject, RouterProvider, createMemoryRouter, createBrowserRouter } from "react-router-dom";
+import { routesConfig } from "../../router";
 
 type LinkType = {
   to: string;
