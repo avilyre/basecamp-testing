@@ -35,3 +35,19 @@
 //     }
 //   }
 // }
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+declare namespace Cypress {
+  interface Chainable {
+    login(): Chainable<void>
+  }
+}
+
+Cypress.Commands.add("login", () => {
+  cy.visit("http://localhost:5173/");
+  cy.intercept("GET", "http://localhost:3000/pokemons", {
+    fixture: "pokemons.json"
+  });
+  cy.contains("Sign In").click();
+  cy.url().should("eq", "http://localhost:5173/dashboard");
+});
