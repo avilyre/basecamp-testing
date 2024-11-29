@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Login } from ".";
+import { LoginViewModel } from ".";
 import React from "react";
 
 type LinkType = {
@@ -20,7 +20,7 @@ describe("Login Page", () => {
   }));
 
   beforeEach(() => {
-    render(<Login />);
+    render(<LoginViewModel />);
   });
 
   it("Should be able to render the login page", async () => {

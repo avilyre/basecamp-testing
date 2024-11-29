@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
 
-import { Login } from "./pages/login";
+import { LoginViewModel } from "./pages/login";
 import { Dashboard } from "./pages/dashboard";
 import { SignUp } from "./pages/sign-up";
 import { NotFound } from "./pages/not-found";
@@ -33,7 +33,7 @@ export const routesConfig = (props?: RoutesConfig) => {
       children: [
         {
           path: "/",
-          element: <Login />,
+          element: <LoginViewModel />,
         },
         {
           path: "/sign-up",
